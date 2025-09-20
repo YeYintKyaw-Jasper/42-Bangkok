@@ -6,7 +6,7 @@
 #    By: yekyaw <yekyaw@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/30 13:34:15 by yekyaw            #+#    #+#              #
-#    Updated: 2025/09/03 17:51:31 by yekyaw           ###   ########.fr        #
+#    Updated: 2025/09/10 07:37:01 by yekyaw           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,11 +18,17 @@ PART1 = ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c \
         ft_strncmp.c ft_memchr.c ft_memcmp.c ft_strnstr.c ft_atoi.c \
 		ft_calloc.c ft_strdup.c ft_strrchr.c
 
-PART2 = ft_substr.c ft_strjoin.c ft_strtrim.c
+PART2 = ft_substr.c ft_strjoin.c ft_strtrim.c ft_split.c ft_itoa.c ft_strmapi.c \
+		ft_striteri.c ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c \
+		ft_putnbr_fd.c 
+
+BONUS = ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c ft_lstadd_back.c \
+		ft_lstdelone.c ft_lstclear.c ft_lstiter.c ft_lstmap.c 
 
 SRC = ${PART1} ${PART2}
 
 OBJS = ${SRC:.c=.o}
+BONUS_OBJS = ${BONUS:.c=.o}
 
 CC = cc
 RM = rm -f
@@ -34,11 +40,14 @@ all: ${NAME}
 $(NAME): $(OBJS)
 		ar rcs ${NAME} ${OBJS}
 
+bonus:	${OBJS} ${BONUS_OBJS}
+		ar rcs ${NAME} ${OBJS} ${BONUS_OBJS}
+
 %.o: %.c
 		${CC} ${CFLAGS} ${INCLUDE} -c $< -I libft.h -o ${<:.c=.o}
 
 clean: 
-		${RM} ${OBJS}
+		${RM} ${OBJS} ${BONUS_OBJS}
 
 fclean: clean
 		${RM} ${NAME}

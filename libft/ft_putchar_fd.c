@@ -1,30 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yekyaw <yekyaw@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/31 16:15:19 by yekyaw            #+#    #+#             */
-/*   Updated: 2025/09/10 07:17:22 by yekyaw           ###   ########.fr       */
+/*   Created: 2025/09/07 16:03:57 by yekyaw            #+#    #+#             */
+/*   Updated: 2025/09/07 16:09:27 by yekyaw           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_calloc(size_t nelem, size_t elsize)
+void	ft_putchar_fd(char c, int fd)
 {
-	size_t			total;
-	unsigned char	*ptr;
-
-	if (nelem == 0 || elsize == 0)
-		return (malloc(0));
-	if (nelem > (size_t)-1 / elsize)
-		return (0);
-	total = nelem * elsize;
-	ptr = malloc(total);
-	if (!ptr)
-		return (0);
-	ft_bzero(ptr, total);
-	return (ptr);
+	write(fd, &c, 1);
 }

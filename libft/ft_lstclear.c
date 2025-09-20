@@ -1,30 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yekyaw <yekyaw@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/31 16:15:19 by yekyaw            #+#    #+#             */
-/*   Updated: 2025/09/10 07:17:22 by yekyaw           ###   ########.fr       */
+/*   Created: 2025/09/07 18:25:40 by yekyaw            #+#    #+#             */
+/*   Updated: 2025/09/07 18:42:22 by yekyaw           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_calloc(size_t nelem, size_t elsize)
+void	ft_lstclear(t_list **lst, void (*del)(void*))
 {
-	size_t			total;
-	unsigned char	*ptr;
+	t_list	*next;
+	t_list	*current;
 
-	if (nelem == 0 || elsize == 0)
-		return (malloc(0));
-	if (nelem > (size_t)-1 / elsize)
-		return (0);
-	total = nelem * elsize;
-	ptr = malloc(total);
-	if (!ptr)
-		return (0);
-	ft_bzero(ptr, total);
-	return (ptr);
+	if (lst && del)
+	{
+		current = *lst;
+		while (current)
+		{
+			next = current->next;
+			del(current->content);
+			free(current);
+			current = next;
+		}
+		*lst = NULL;
+	}
 }

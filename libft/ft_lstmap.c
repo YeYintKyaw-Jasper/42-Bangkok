@@ -1,39 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_substr.c                                        :+:      :+:    :+:   */
+/*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yekyaw <yekyaw@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/03 13:46:46 by yekyaw            #+#    #+#             */
-/*   Updated: 2025/09/07 17:52:52 by yekyaw           ###   ########.fr       */
+/*   Created: 2025/09/07 18:38:53 by yekyaw            #+#    #+#             */
+/*   Updated: 2025/09/07 18:38:58 by yekyaw           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_substr(const char *s, unsigned int start, size_t len)
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
-	char	*substr;
-	size_t	str_size;
+	t_list	*new_lst;
+	t_list	*new_node;
 
-	if (!s)
+	if (!lst || !f)
 		return (NULL);
-	str_size = ft_strlen(s);
-	if (str_size < start)
+	new_lst = NULL;
+	new_node = NULL;
+	while (lst)
 	{
-		substr = (char *)malloc(sizeof(char) * 1);
-		if (!substr)
+		new_node = ft_lstnew(f(lst->content));
+		if (!new_node)
+		{
+			ft_lstclear(&new_lst, del);
 			return (NULL);
-		substr[0] = '\0';
-		return (substr);
+		}
+		ft_lstadd_back(&new_lst, new_node);
+		lst = lst->next;
 	}
-	if (len > str_size - start)
-		len = str_size - start;
-	substr = (char *)malloc(sizeof(char) * (len + 1));
-	if (!substr)
-		return (NULL);
-	ft_memcpy(substr, s + start, len);
-	substr[len] = '\0';
-	return (substr);
+	return (new_lst);
 }
